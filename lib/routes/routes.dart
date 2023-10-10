@@ -1,3 +1,4 @@
+import 'package:cs_books/presentation/book_details/layout/book_details.dart';
 import 'package:cs_books/presentation/books_home/books_home.dart';
 import 'package:cs_books/routes/route_constants.dart';
 import 'package:cs_books/utils/colors.dart';
@@ -10,6 +11,10 @@ class Routes {
         return MaterialPageRoute(
             settings: const RouteSettings(name: RouteConstant.home),
             builder: (context) => const CSBooksHome());
+      case RouteConstant.details:
+        return MaterialPageRoute(
+            settings: const RouteSettings(name: RouteConstant.details),
+            builder: (context) => BookDetails(bookIsbn: settings.arguments as String,));
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(

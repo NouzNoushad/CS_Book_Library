@@ -1,3 +1,4 @@
+import 'package:cs_books/data/bloc/book_details/book_details_bloc.dart';
 import 'package:cs_books/data/bloc/books_bloc/books_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,10 +12,19 @@ class BlocWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => BooksRepository(),
-      child: BlocProvider(
-        create: (context) => BooksBloc(
-          booksRepository: RepositoryProvider.of<BooksRepository>(context),
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => BooksBloc(
+              booksRepository: RepositoryProvider.of<BooksRepository>(context),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => BookDetailsBloc(
+              booksRepository: RepositoryProvider.of<BooksRepository>(context),
+            ),
+          ),
+        ],
         child: child,
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:cs_books/data/bloc/books_bloc/books_bloc.dart';
+import 'package:cs_books/routes/route_constants.dart';
 import 'package:cs_books/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,54 +42,60 @@ class _CSBooksHomeState extends State<CSBooksHome> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
-                    childAspectRatio: 0.7),
+                    childAspectRatio: 0.6),
                 itemCount: state.books.length,
                 itemBuilder: (context, index) {
                   Books book = state.books[index];
-                  return Column(children: [
-                    Expanded(
-                      flex: 2,
-                      child: Material(
-                        color: ColorPicker.primaryColor1,
-                        child: Image.network(
-                          book.image.toString(),
-                          fit: BoxFit.cover,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(RouteConstant.details,
+                          arguments: book.isbn13);
+                    },
+                    child: Column(children: [
+                      Expanded(
+                        flex: 2,
+                        child: Material(
+                          color: ColorPicker.primaryColor1,
+                          child: Image.network(
+                            book.image.toString(),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: ColorPicker.whiteColor,
-                          borderRadius: BorderRadius.circular(8),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: ColorPicker.whiteColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                book.title.toString(),
+                                style: const TextStyle(
+                                    color: ColorPicker.primaryColor4,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                book.price.toString(),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: ColorPicker.primaryColor3,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              book.title.toString(),
-                              style: const TextStyle(
-                                  color: ColorPicker.primaryColor4,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              book.price.toString(),
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  color: ColorPicker.primaryColor3,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ]);
+                      )
+                    ]),
+                  );
                 });
           }
           return Container();
